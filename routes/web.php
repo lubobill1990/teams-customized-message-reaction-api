@@ -21,8 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/message-reactions', \App\Http\Controllers\MessageReactionController::class);
-
 Route::get('/demo', function () {
     echo <<<EOF
     <!DOCTYPE html>
@@ -48,7 +46,7 @@ Route::get('/demo', function () {
       <h1>Pusher Test</h1>
       <p>
         Try publishing an event to channel <code>my-channel</code>
-        with event name <code>my-event</code>.
+        with event name <code>message-reaction-changed</code>.
       </p>
     </body>
     EOF

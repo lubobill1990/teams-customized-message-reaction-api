@@ -101,5 +101,7 @@ class MessageReactionController extends Controller
     {
         $messageReaction->delete();
         event(new MessageReactionChangedEvent(MessageReactionChangeType::DELETE(), $messageReaction));
+
+        return $messageReaction->toArray();
     }
 }
