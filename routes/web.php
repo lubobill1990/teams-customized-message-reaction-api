@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Route::get('/demo', function (\Illuminate\Http\Request $request) {
     $validated = $request->validate(['chat_id' => 'string|max:256']);
-    $chatId = str_replace(':', '_', @$validated['chat_id']);
+    $chatId = sha1(@$validated['chat_id']);
     
     echo <<<EOF
     <!DOCTYPE html>
