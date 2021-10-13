@@ -21,7 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/demo', function () {
+Route::get('/demo', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate(['chat_id' => 'string|max:256']);
+    $chatId = str_replace(':', '_', @$validated['chat_id']);
+    
     echo <<<EOF
     <!DOCTYPE html>
     <head>
@@ -36,7 +39,7 @@ Route::get('/demo', function () {
           cluster: 'ap1'
         });
     
-        var channel = pusher.subscribe('general-channel');
+        var channel = pusher.subscribe('chat-channel_{$chatId}');
         channel.bind('message-reaction-changed', function(data) {
           alert(JSON.stringify(data));
         });

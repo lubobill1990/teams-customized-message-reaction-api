@@ -23,7 +23,7 @@ class MessageReactionChangedEvent implements ShouldBroadcast
 
   public function broadcastOn()
   {
-      return ['general-channel'];
+      return ['chat-channel_' . str_replace(':', '_', $this->message['chat_id'])];
   }
 
   public function broadcastAs()

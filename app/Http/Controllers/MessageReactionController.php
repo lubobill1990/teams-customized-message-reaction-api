@@ -44,14 +44,16 @@ class MessageReactionController extends Controller
             ->whereChatId($validated['chat_id'])
             ->whereMessageId($validated['message_id'])
             ->first();
+        $eventType = MessageReactionChangeType::CREATE();
         if ($reaction) {
             $reaction->fill($validated);
+            $eventType = MessageReactionChangeType::UPDATE();
         } else {
             $reaction = MessageReaction::create($validated);
         }
         
         $reaction->save();
-        event(new MessageReactionChangedEvent(MessageReactionChangeType::CREATE(), $reaction));
+        event(new MessageReactionChangedEvent($eventType, $reaction));
 
         return $reaction->toArray();
     }
